@@ -1,0 +1,22 @@
+# syntax=docker/dockerfile:1
+
+ARG NODE_VERSION=20.17.0
+
+FROM node:${NODE_VERSION}-alpine AS base
+
+WORKDIR /usr/src/app
+
+
+COPY package*.json ./
+
+RUN npm install -g @nestjs/cli 
+
+RUN npm install
+
+COPY . .
+
+ENV NODE_ENV development
+
+EXPOSE 3000
+
+CMD ["npm", "run", "start:dev"]
